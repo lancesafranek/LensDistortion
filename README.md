@@ -5,3 +5,6 @@ python module dependencies
  matplotlib
  python-opencv
 
+TODO:
+    update readme with setup and goals
+    set up objective function
