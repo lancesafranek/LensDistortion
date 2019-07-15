@@ -1,0 +1,5 @@
+# ignore compiled python files anywher
+*.[pyc]
+src/__pycache__
+# ignore vscode generated files
+.vscode
