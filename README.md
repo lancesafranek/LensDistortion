@@ -1,3 +1,7 @@
 # LensDistortion
 
-# need to install python-opencv
+python module dependencies
+ numpy
+ matplotlib
+ python-opencv
+
