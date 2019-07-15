@@ -1,10 +1,10 @@
 # LensDistortion
 
-python module dependencies
- numpy
- matplotlib
- python-opencv
+## python module dependencies
+1. numpy
+2. matplotlib
+3. python-opencv
 
-TODO:
-    update readme with setup and goals
-    set up objective function
+## TODO:
+1. Update readme with setup and goals
+2. Set up objective function
