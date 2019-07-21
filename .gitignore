@@ -1,5 +1,7 @@
-# ignore compiled python files anywher
+# ignore compiled python files anywhere
 *.[pyc]
 src/__pycache__
 # ignore vscode generated files
 .vscode
+# ignore anything in the training_data directory (auto-generated)
+training_data

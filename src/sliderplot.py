@@ -16,8 +16,13 @@ class SliderPlot():
     ax_x_len = 0.8 # width
     ax_y_len = ax_h - ax_y_padding
 
+    # callbacks for updating images when sliders are modified
     plot1_callback = None
     plot2_callback = None
+
+    # figure/axes for plotting
+    fig = None
+    ax = None
 
     def set_update_callback(self, fn):
         # fn is a function that accepts a list of n parameters ( assumes n sliders)
