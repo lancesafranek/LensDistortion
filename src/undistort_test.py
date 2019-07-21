@@ -1,7 +1,7 @@
 # testing ground for sliderplot class
 import cv2
 import numpy as np
-from sliderplot import slider_plot
+from sliderplot import SliderPlot
 import os
 
 # read image
@@ -26,7 +26,7 @@ def undistort_callback(vals):
     return img_new
 
 # create new slider plot
-sldplt = slider_plot(img, img)
+sldplt = SliderPlot(img, img)
 # add sliders
 sldplt.add_slider(-1e-1, 1e-1, 0, 'k1')
 sldplt.add_slider(-1e-4, 1e-4, 1.0e-5, 'k2')

@@ -1,7 +1,7 @@
 # sandbox for hough transform
 import cv2
 import numpy as np
-from sliderplot import slider_plot
+from sliderplot import SliderPlot
 import os
 
 f = "standard-grid.jpg"
@@ -34,7 +34,7 @@ def hough_callback(vals):
     return line_img
 
 # create new slider plot
-sldplt = slider_plot(img, edges)
+sldplt = SliderPlot(img, edges)
 # add sliders
 sldplt.add_slider(0,1000, 200, 'thresh')
 sldplt.add_slider(0, 5, 2, 'rho_')

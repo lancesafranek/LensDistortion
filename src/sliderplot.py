@@ -3,7 +3,7 @@
 from matplotlib import pyplot as plt
 from matplotlib.widgets import Slider
 
-class slider_plot():
+class SliderPlot():
     # member variables
     sliders = [] # list of sliders
     # flag for if plots can be shown yet or not
