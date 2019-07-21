@@ -16,10 +16,19 @@ class SliderPlot():
     ax_x_len = 0.8 # width
     ax_y_len = ax_h - ax_y_padding
 
+    plot1_callback = None
+    plot2_callback = None
+
     def set_update_callback(self, fn):
         # fn is a function that accepts a list of n parameters ( assumes n sliders)
         # fn returns an image
-        self.callback = fn
+        self.plot2_callback = fn
+
+    def set_update_callbacks(self, fn, gn):
+        # fn/gn are functions that accept a list of n parameters (assumes n sliders)
+        # fn/gn return images
+        self.plot1_callback = fn
+        self.plot2_callback = gn
 
     def update(self, slider_val):
         # internal callback for slider values changing
@@ -29,9 +38,14 @@ class SliderPlot():
         for sld in self.sliders:
             vals.append(sld.val)
         
-        # pass slider values to supplied callback (assumes set_update_callback has been called)
-        img_new = self.callback(vals)
-        self.plot2.set_data(img_new)
+        # pass slider values to supplied callback(s) (assumes set_update_callback(s) has been called)
+        if (self.plot1_callback is not None):
+            img_new = self.plot1_callback(vals)
+            self.plot1.set_data(img_new)
+
+        if (self.plot2_callback is not None):
+            img_new = self.plot2_callback(vals)
+            self.plot2.set_data(img_new)
         
         if (self.canShow):
             self.show()

@@ -91,7 +91,7 @@ def distort_points(points, cameraMatrix, distortionMatrix):
         distortedPoints.append((xCorrected, yCorrected))
     return distortedPoints
 
-def calculate_warped_grid(vals):
+def build_camera_parameters(vals):
     # build camera matrix
     # there's a nice summary here of the units: https://answers.opencv.org/question/189506/understanding-the-result-of-camera-calibration-and-its-units/
     #   also a lot of information about this stuff on the docs: https://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html
@@ -105,6 +105,14 @@ def calculate_warped_grid(vals):
     distortionParameters = np.zeros((4,1), np.float64)
     distortionParameters[0,0] = vals[2] # radial distortion parameter, > 0 => barrel distortion [dimensionless?]
     distortionParameters[1,0] = vals[3] # radial distortion parameter [dimensionless?]
+    # distortionParameters[2,0] = 0
+    # distortionParameters[3,0] = 0
+
+    return (cameraMatrix, distortionParameters)
+
+def calculate_warped_grid(vals):
+    # get camera properties
+    (cameraMatrix, distortionParameters) = build_camera_parameters(vals)
 
     # map grid under distortion
     distortedGridStartPoints = distort_points(gridStartPoints, cameraMatrix, distortionParameters)
@@ -121,17 +129,24 @@ def calculate_warped_grid(vals):
     # return warped grid image
     return warpedGridImg
 
+def undistort_grid_callback(vals):
+    (cameraMatrix, distortionParameters) = build_camera_parameters(vals)
+    warpedGridImg = calculate_warped_grid(vals) # <- I am a bad person, this is being recalculated
+    # call opencvs undistort method with camera properties
+    unwarpedGrid = cv2.undistort(warpedGridImg,cameraMatrix, distortionParameters);
 
-initialValues = [12,12,-0.0005,0.0]
+    return unwarpedGrid
+
+initialValues = [12,12,-0.0001,0.0]
 # create new slider plot
-sldplt = SliderPlot(gridImg, calculate_warped_grid(initialValues))
+sldplt = SliderPlot(gridImg, calculate_warped_grid(initialValues), 'Warped Grid', 'Unwarped Grid (cv2.undistort(...))')
 # add sliders
 sldplt.add_slider(0, 30, initialValues[0], 'fx')
 sldplt.add_slider(0, 30, initialValues[1], 'fy')
 sldplt.add_slider(-1e-3, 1e-3, initialValues[2], 'k1')
 sldplt.add_slider(-1e-4, 1e-4, initialValues[3], 'k2')
-
 # set callback, number of sliders has to be equal to the number of entries in list of argument of callback (e.g. len(vals) == num_sliders)
-sldplt.set_update_callback(calculate_warped_grid)
+sldplt.set_update_callbacks(calculate_warped_grid, undistort_grid_callback)
 # display plot
 sldplt.show()
+
