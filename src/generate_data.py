@@ -14,7 +14,11 @@ import csv
 
 # path to file that will contain camera properties of generated images
 params_filename = "camera_properties.csv"
-params_path = os.path.join(os.path.dirname(__file__), '../training_data', params_filename)
+train_dir = os.path.join(os.path.dirname(__file__), '../training_data')
+# make training_data directory if necessary
+if not os.path.isdir(train_dir):
+    os.mkdir(train_dir)
+params_path = os.path.join(train_dir, params_filename)
 
 # Number of images to generate
 N = 500
