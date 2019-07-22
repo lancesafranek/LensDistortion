@@ -1,8 +1,12 @@
 
 # Linux Installation
 
+
 ## Install OpenCV
+```
 sudo apt-get install libopencv-dev
+```
+
 
 ## Install Python3 Modules
 ```
@@ -17,6 +21,7 @@ sliderplot
 
 
 # Create virtual environment
+```
 sudo apt-get install python3-venv
-
 python3 -m venv lensdistortion
+```
