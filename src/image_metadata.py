@@ -45,7 +45,7 @@ def getMetadata(filename):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--image', help='image file to extract EXIF data from')
+    parser.add_argument('--image', help='image file to extract EXIF data from', required=True)
     args = parser.parse_args()
     metadata = getMetadata(args.image)
     print(json.dumps(metadata))
