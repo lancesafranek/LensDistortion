@@ -8,22 +8,25 @@ import os
 f = "distorted-grid.jpg"
 pth = os.path.join(os.path.dirname(__file__), '../data', f)
 img = cv2.imread(pth, 0)
-(w,h) = img.shape
+(w, h) = img.shape
 
 # callback for applying 'undistortion' to image
+
+
 def undistort_callback(vals):
-    distCoeff= np.zeros((4,1), np.float64)
+    distCoeff = np.zeros((4, 1), np.float64)
     cam = np.eye(3, dtype=np.float32)
-    cam[0,2] = w/2.0
-    cam[1,2] = h/2.0
-    cam[0,0] = vals[4] # focal length x
-    cam[1,1] = vals[5] # focal length y
-    distCoeff[0,0] = vals[0]
-    distCoeff[1,0] = vals[1]
-    distCoeff[2,0] = vals[2]
-    distCoeff[3,0] = vals[3]
-    img_new = cv2.undistort(img,cam,distCoeff)
+    cam[0, 2] = w/2.0
+    cam[1, 2] = h/2.0
+    cam[0, 0] = vals[4]  # focal length x
+    cam[1, 1] = vals[5]  # focal length y
+    distCoeff[0, 0] = vals[0]
+    distCoeff[1, 0] = vals[1]
+    distCoeff[2, 0] = vals[2]
+    distCoeff[3, 0] = vals[3]
+    img_new = cv2.undistort(img, cam, distCoeff)
     return img_new
+
 
 # create new slider plot
 sldplt = SliderPlot(img, img)

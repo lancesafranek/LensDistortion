@@ -3,17 +3,18 @@
 from matplotlib import pyplot as plt
 from matplotlib.widgets import Slider
 
+
 class SliderPlot():
     # member variables
-    sliders = [] # list of sliders
+    sliders = []  # list of sliders
     # flag for if plots can be shown yet or not
     canShow = False
 
     # slider margin + spacing params
-    ax_h = 0.03; # vertical space
-    ax_y_padding = 0.005 # vertical padding
-    ax_x = 0.1 # starting x val
-    ax_x_len = 0.8 # width
+    ax_h = 0.03  # vertical space
+    ax_y_padding = 0.005  # vertical padding
+    ax_x = 0.1  # starting x val
+    ax_x_len = 0.8  # width
     ax_y_len = ax_h - ax_y_padding
 
     # callbacks for updating images when sliders are modified
@@ -42,7 +43,7 @@ class SliderPlot():
         vals = []
         for sld in self.sliders:
             vals.append(sld.val)
-        
+
         # pass slider values to supplied callback(s) (assumes set_update_callback(s) has been called)
         if (self.plot1_callback is not None):
             img_new = self.plot1_callback(vals)
@@ -51,7 +52,7 @@ class SliderPlot():
         if (self.plot2_callback is not None):
             img_new = self.plot2_callback(vals)
             self.plot2.set_data(img_new)
-        
+
         if (self.canShow):
             self.show()
 
@@ -63,24 +64,25 @@ class SliderPlot():
 
         self.fig.canvas.draw_idle()
 
-    def add_slider(self, val_min, val_max, val_init, s = ""):
+    def add_slider(self, val_min, val_max, val_init, s=""):
         num_sliders = len(self.sliders)
-        ax_new = plt.axes([self.ax_x, num_sliders*self.ax_h, self.ax_x_len, self.ax_y_len ])
+        ax_new = plt.axes([self.ax_x, num_sliders*self.ax_h,
+                           self.ax_x_len, self.ax_y_len])
         slider_new = Slider(ax_new, s, val_min, val_max, val_init)
         slider_new.on_changed(self.update)
         self.sliders.append(slider_new)
-    
-    def __init__(self, img1, img2, title1 = "", title2 = ""):
+
+    def __init__(self, img1, img2, title1="", title2=""):
         # constructor
         # make two plots here
         self.fig, self.ax = plt.subplots()
-        
+
         # initialize first plot
         plt.subplot(121)
-        self.plot1 = plt.imshow(img1, cmap = 'gray');
+        self.plot1 = plt.imshow(img1, cmap='gray')
         plt.title(title1)
 
         # intitialize second plot
         plt.subplot(122)
-        self.plot2 = plt.imshow(img2, cmap = 'gray')
+        self.plot2 = plt.imshow(img2, cmap='gray')
         plt.title(title2)
