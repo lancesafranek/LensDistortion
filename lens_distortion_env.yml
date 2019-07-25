@@ -1,16 +1,18 @@
 name: LensDistortion
 channels:
+  - conda-forge
   - defaults
 dependencies:
   - _tflow_select=2.1.0=gpu
   - absl-py=0.7.1=py37_0
   - astor=0.7.1=py37_0
   - blas=1.0=mkl
-  - ca-certificates=2019.5.15=0
-  - certifi=2019.6.16=py37_0
+  - ca-certificates=2019.6.16=hecc5488_0
+  - certifi=2019.6.16=py37_1
   - cudatoolkit=10.0.130=0
   - cudnn=7.6.0=cuda10.0_0
   - cycler=0.10.0=py37_0
+  - exifread=2.1.2=py_1
   - freetype=2.9.1=ha9979f8_1
   - gast=0.2.2=py37_0
   - grpcio=1.16.1=py37h351948d_1
@@ -36,7 +38,7 @@ dependencies:
   - numpy=1.16.4=py37h19fb1c0_0
   - numpy-base=1.16.4=py37hc3f5095_0
   - opencv=3.4.2=py37h40b0b35_0
-  - openssl=1.1.1c=he774522_1
+  - openssl=1.1.1c=hfa6e2cd_0
   - pandas=0.24.2=py37ha925a31_0
   - pip=19.1.1=py37_0
   - protobuf=3.8.0=py37h33f27b4_0
