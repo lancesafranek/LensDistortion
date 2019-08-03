@@ -11,8 +11,6 @@ img = cv2.imread(pth, 0)
 edges = cv2.Canny(img, 50, 150, apertureSize=3)
 
 # callback for extracting lines and drawing on blank image
-
-
 def hough_callback(vals):
     line_img = np.zeros((h, w, 3), np.uint8)
     lines = cv2.HoughLines(edges, vals[1], np.pi/180.0, int(vals[0]))

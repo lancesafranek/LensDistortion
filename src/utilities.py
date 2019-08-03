@@ -2,7 +2,6 @@
 import cv2
 import numpy as np
 
-
 def build_camera_matrices(vals, width, height):
     # build camera matrix
     # Apply lens distortion to a list of points
@@ -40,8 +39,6 @@ def build_camera_matrices(vals, width, height):
     return (cameraMatrix, distortionParameters)
 
 # method to apply distortion to a list of points ( a point is a 2-tuple )
-
-
 def distort_points(points, cameraMatrix, distortionMatrix):
     # Apply lens distortion to a list of points
     #

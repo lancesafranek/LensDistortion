@@ -21,15 +21,15 @@ if not os.path.isdir(train_dir):
 params_path = os.path.join(train_dir, params_filename)
 
 # Number of images to generate
-N = 500
+N = 100
 
 # size of each image
 w = 512
-h = 512
+h = 256
 
 # size of image after cropping
 w_crop = 256
-h_crop = 256
+h_crop = 128
 
 # pixels to crop before writing image to file (from each edge)
 w_margin = int((w-w_crop)/2.0)
@@ -74,7 +74,7 @@ for idx in range(N):
                  (int(x2), int(y2)), (255, 255, 255), 1)
 
     # crop image (edges can get warped pretty bad)
-    im_crop = distortedGridImg[w_margin:w-w_margin, h_margin:h-h_margin]
+    im_crop = distortedGridImg[h_margin:h-h_margin, w_margin:w-w_margin]
 
     # write image to file
     f = str(idx) + ".jpg"

@@ -27,7 +27,6 @@ for i in range(len(gridStartPoints)):
     (x2, y2) = gridEndPoints[i]
     cv2.line(gridImg, (int(x1), int(y1)), (int(x2), int(y2)), (0, 0, 255), 2)
 
-
 def calculate_warped_grid(vals):
     # get camera properties
     (cameraMatrix, distortionParameters) = build_camera_matrices(vals, w, h)

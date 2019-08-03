@@ -88,4 +88,5 @@ model.fit(train_images, train_output, epochs=5)
 
 # evaluate model on test data
 test_loss = model.evaluate(test_images, test_output)
+
 print('Test Loss: ' + str(test_loss))
