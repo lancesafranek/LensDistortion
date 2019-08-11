@@ -2,6 +2,7 @@
 import cv2
 import numpy as np
 
+
 def build_camera_matrices(vals, width, height):
     # build camera matrix
     # Apply lens distortion to a list of points
@@ -17,6 +18,15 @@ def build_camera_matrices(vals, width, height):
     #                            see: https://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html
     #   distortionMatrix - 4x1 numpy vector containing distortion parameters
     #                            see: https://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html
+
+    # Check args
+    if list != type(vals):
+        raise ValueError('"vals" is not list')
+    if 4 > len(vals):
+        raise ValueError('Too few items in list (min 4): {0}'.format(len(vals)))
+    elif 6 < len(vals):
+        raise ValueError('Too many items in list (max 6): {0}'.format(len(vals)))
+    #.end
 
     cameraMatrix = np.eye(3, dtype=np.float32)
     cameraMatrix[0, 2] = width/2.0  # principal point (center of image)
@@ -37,6 +47,7 @@ def build_camera_matrices(vals, width, height):
 
     # return camera properties
     return (cameraMatrix, distortionParameters)
+
 
 # method to apply distortion to a list of points ( a point is a 2-tuple )
 def distort_points(points, cameraMatrix, distortionMatrix):
