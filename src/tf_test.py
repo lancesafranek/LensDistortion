@@ -3,7 +3,7 @@
 # tensorflow sandbox
 import numpy as np
 import pandas as pd
-import os
+import os, glob
 import cv2
 import random
 import tensorflow as tf
@@ -15,6 +15,10 @@ params_filename = "camera_properties.csv"
 train_dir = os.path.join(os.path.dirname(__file__), '../training_data')
 params_path = os.path.join(train_dir, params_filename)
 output_df = pd.read_csv(params_path)
+# build path to checkpoint file (incremental progress of neural network is saved to this file)
+checkpoint_filename = "nn.ckpt"
+checkpoint_path = os.path.join(train_dir, checkpoint_filename)
+
 # convert to numpy array
 output = output_df.to_numpy()
 # drop first column (idx)
@@ -27,11 +31,13 @@ w = -1
 h = -1
 num_images = -1
 
+img_ext = "jpg"
+
 # read images
 print('Reading Images...')
 for root, dirs, files in os.walk(train_dir):
     for file in files:
-        if file.endswith(".jpg"):
+        if file.endswith("." + img_ext):
             # found an image in the train directory
             # format is <idx>.jpg
             idx_str = file[:-4]
@@ -45,8 +51,8 @@ for root, dirs, files in os.walk(train_dir):
             # initialize train set if necessary (allocate memory, find size of images, etc.)
             if (not image_set_initialized):
                 # assumes every image in train_data/. is an image except the camera_properties.csv files
-                num_images = len(files) - 1
-                (w, h) = im.shape
+                num_images = len(glob.glob1(train_dir,"*." + img_ext))
+                (h, w) = im.shape
                 images = np.zeros((num_images, h, w, 1), np.uint8)
                 image_set_initialized = True
 
@@ -73,7 +79,7 @@ test_output = output[test_idx, :]
 
 # build neural network, REVISIT - structure of network is more or less random
 model = models.Sequential()
-model.add(layers.Conv2D(16, (3, 3), activation='relu', input_shape=(w, h, 1)))
+model.add(layers.Conv2D(16, (3, 3), activation='relu', input_shape=(h, w, 1)))
 model.add(layers.MaxPooling2D((2, 2)))
 model.add(layers.Conv2D(16, (3, 3), activation='relu'))
 model.add(layers.MaxPooling2D((2, 2)))
@@ -81,12 +87,16 @@ model.add(layers.Conv2D(16, (3, 3), activation='relu'))
 model.add(layers.Flatten())
 model.add(layers.Dense(4, activation='linear'))
 # REVISIT loss function is important, mean_squared_error may not be reasonable
-model.compile(optimizer='adam',
+opt = tf.keras.optimizers.Adam(lr=0.001)
+model.compile(optimizer=opt,
               loss='mean_squared_error')
+
+# set up checkpoints to save progress while training (https://www.tensorflow.org/tutorials/keras/save_and_restore_models)
+cp_callback = tf.keras.callbacks.ModelCheckpoint(checkpoint_path)
+
 # train model
-model.fit(train_images, train_output, epochs=5)
+model.fit(train_images, train_output, epochs=15, callbacks = [cp_callback])
 
 # evaluate model on test data
 test_loss = model.evaluate(test_images, test_output)
-
 print('Test Loss: ' + str(test_loss))

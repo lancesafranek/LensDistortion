@@ -21,15 +21,15 @@ if not os.path.isdir(train_dir):
 params_path = os.path.join(train_dir, params_filename)
 
 # Number of images to generate
-N = 100
+N = 512
 
 # size of each image
 w = 512
-h = 256
+h = 512
 
 # size of image after cropping
 w_crop = 256
-h_crop = 128
+h_crop = 256
 
 # pixels to crop before writing image to file (from each edge)
 w_margin = int((w-w_crop)/2.0)

@@ -77,6 +77,7 @@ def distort_points(points, cameraMatrix, distortionMatrix):
         xCorrected = xCorrected + (2. * p1 * x * y + p2 * (r2 + 2. * x * x))
         yCorrected = yCorrected + (p1 * (r2 + 2. * y * y) + 2. * p2 * x * y)
 
+        # transform from relative coordinates to image coordinates
         xCorrected = xCorrected * fx + cx
         yCorrected = yCorrected * fy + cy
 
