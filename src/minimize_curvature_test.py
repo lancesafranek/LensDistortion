@@ -52,13 +52,13 @@ def list_to_np(points):
 fx = 12
 fy = 12
 k1 = -0.0001
-k2 = 0 
+k2 = 0
 
 # transform parameters into form that opencv wants
 (cameraMatrix, distortionParameters) = build_camera_matrices(
     [fx, fy, k1, k2], w, h)
 cx = cameraMatrix[0, 2] # principal point (width/2)
-cy = cameraMatrix[1, 2] # principal point (height/2)    
+cy = cameraMatrix[1, 2] # principal point (height/2)
 
 # build lines (list of lists of 2-tuples, list of lists of points)
 lines = []

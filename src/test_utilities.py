@@ -44,26 +44,26 @@ if __name__ == '__main__':
     unittest.main()
 
 
-
-
-gridStartPoints = []
-gridEndPoints = []
-
-num = 11
-res = 11
-w = 100
-h= 100
-xVals = numpy.linspace(0, w, num)
-yVals = numpy.linspace(0, h, num)
-
-stepsW = w/res
-stepsH = h/res
-for i in range(len(xVals)):
-    for j in range(len(yVals)):
-        gridStartPoints.append((xVals[j], yVals[j]))
-
-
-
+#
+#
+# gridStartPoints = []
+# gridEndPoints = []
+#
+# num = 11
+# res = 11
+# w = 100
+# h= 100
+# xVals = numpy.linspace(0, w, num)
+# yVals = numpy.linspace(0, h, num)
+#
+# stepsW = w/res
+# stepsH = h/res
+# for i in range(len(xVals)):
+#     for j in range(len(yVals)):
+#         gridStartPoints.append((xVals[j], yVals[j]))
+#
+#
+#
 
 
 # xv, yv = numpy.meshgrid(x, y)

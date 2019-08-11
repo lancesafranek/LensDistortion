@@ -5,25 +5,42 @@ from matplotlib.widgets import Slider
 
 
 class SliderPlot():
-    # member variables
-    sliders = []  # list of sliders
-    # flag for if plots can be shown yet or not
-    canShow = False
 
-    # slider margin + spacing params
-    ax_h = 0.03  # vertical space
-    ax_y_padding = 0.005  # vertical padding
-    ax_x = 0.1  # starting x val
-    ax_x_len = 0.8  # width
-    ax_y_len = ax_h - ax_y_padding
+    def __init__(self, img1, img2, title1="", title2=""):
 
-    # callbacks for updating images when sliders are modified
-    plot1_callback = None
-    plot2_callback = None
+        # member variables
+        self.sliders = []  # list of sliders
+        # flag for if plots can be shown yet or not
+        self.canShow = False
 
-    # figure/axes for plotting
-    fig = None
-    ax = None
+        # slider margin + spacing params
+        self.ax_h = 0.03  # vertical space
+        self.ax_y_padding = 0.005  # vertical padding
+        self.ax_x = 0.1  # starting x val
+        self.ax_x_len = 0.8  # width
+        self.ax_y_len = self.ax_h - self.ax_y_padding
+
+        # callbacks for updating images when sliders are modified
+        self.plot1_callback = None
+        self.plot2_callback = None
+
+        # figure/axes for plotting
+        self.fig = None
+        self.ax = None
+
+        # constructor
+        # make two plots here
+        self.fig, self.ax = plt.subplots()
+
+        # initialize first plot
+        plt.subplot(121)
+        self.plot1 = plt.imshow(img1, cmap='gray')
+        plt.title(title1)
+
+        # intitialize second plot
+        plt.subplot(122)
+        self.plot2 = plt.imshow(img2, cmap='gray')
+        plt.title(title2)
 
     def set_update_callback(self, fn):
         # fn is a function that accepts a list of n parameters ( assumes n sliders)
@@ -71,18 +88,3 @@ class SliderPlot():
         slider_new = Slider(ax_new, s, val_min, val_max, val_init)
         slider_new.on_changed(self.update)
         self.sliders.append(slider_new)
-
-    def __init__(self, img1, img2, title1="", title2=""):
-        # constructor
-        # make two plots here
-        self.fig, self.ax = plt.subplots()
-
-        # initialize first plot
-        plt.subplot(121)
-        self.plot1 = plt.imshow(img1, cmap='gray')
-        plt.title(title1)
-
-        # intitialize second plot
-        plt.subplot(122)
-        self.plot2 = plt.imshow(img2, cmap='gray')
-        plt.title(title2)
